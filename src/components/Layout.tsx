@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Message } from "./chat/message";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import audioRecorder from "@/lib/audioRecorder";
 import converter from "@/lib/converter";
-import webService from "@/service/webService";
+import webService, { UploadResult } from "@/service/webService";
 import { Combobox, ComboboxOption } from "./ui/combobox";
+import { Chat } from "./chat/chat";
 
 interface LayoutProps {
   globalConfig: Record<string, string>;
@@ -13,6 +14,8 @@ interface LayoutProps {
 
 export function Layout(props: LayoutProps) {
   const { globalConfig } = props;
+  const [chats, setChats] = useState<UploadResult[]>([]);
+  const [loading, setLoading] = useState(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [selectedLang, setSelectedLang] = useState<ComboboxOption>({
     label: globalConfig["en"],
@@ -37,9 +40,13 @@ export function Layout(props: LayoutProps) {
             Math.floor(Math.random() * (99999999999 - 1 + 1) + 1) + ".wav",
           file_content: res,
         };
+
+        setLoading(true);
+
         webService
           .upload(selectedLang.value, reqBody)
-          .then((res) => console.log(res));
+          .then((res) => setChats((old) => [...old, res.data]))
+          .finally(() => setLoading(false));
       });
   };
 
@@ -61,13 +68,30 @@ export function Layout(props: LayoutProps) {
         </div>
         <Card className="flex flex-col flex-1">
           <div className="flex flex-col flex-1 gap-2 p-2 overflow-auto">
-            <Message from="me" msg="this is content" lng="en" />
-            <Message from="ai" msg="this is content" lng="en" />
+            {chats.length ? (
+              chats.map((chat) => (
+                <Chat key={chat.answer.file_name} chat={chat} />
+              ))
+            ) : (
+              <span className="flex items-center justify-center h-full text-center">
+                You don't have any chats yet.
+                <br />
+                Use record button to start.
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-2 p-2">
             <div className="border border-solid h-[35px] rounded-sm flex-1"></div>
-            <Button onClick={isRecording ? stopRecording : startRecording}>
-              {isRecording ? "Stop Recording" : "Record Voice"}
+            <Button
+              onClick={isRecording ? stopRecording : startRecording}
+              disabled={loading}
+            >
+              {loading && <ReloadIcon className="w-4 h-4 mr-2 animate-spin" />}
+              {loading
+                ? "Loading"
+                : isRecording
+                ? "Stop Recording"
+                : "Record Voice"}
             </Button>
           </div>
         </Card>

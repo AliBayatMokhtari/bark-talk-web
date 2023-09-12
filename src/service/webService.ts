@@ -6,7 +6,17 @@ interface ServerResultModel<T> {
   status: "success" | "failed";
 }
 
-type SupportedLang = Record<string, string>;
+export type SupportedLang = Record<string, string>;
+export type UploadResult = {
+  answer: {
+    answer_language: string;
+    file_name: string;
+    text: string;
+    voice_path: string;
+  };
+  prompt: string;
+  prompt_language: string;
+};
 
 interface WebService {
   getSupportedLangs(): Promise<ServerResultModel<SupportedLang>>;
@@ -16,18 +26,7 @@ interface WebService {
       file_name: string;
       file_content: string;
     }
-  ): Promise<
-    ServerResultModel<{
-      answer: {
-        answer_language: string;
-        file_name: string;
-        text: string;
-        voice_path: string;
-      };
-      prompt: string;
-      prompt_language: string;
-    }>
-  >;
+  ): Promise<ServerResultModel<UploadResult>>;
   download(): void;
 }
 
