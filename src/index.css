@@ -69,6 +69,7 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: Roboto;
   }
   body {
     @apply h-screen overflow-hidden bg-background text-foreground;
