@@ -7,7 +7,7 @@ interface MessageProps {
   msg: string;
 }
 
-export default function Message(props: MessageProps) {
+export function Message(props: MessageProps) {
   return (
     <Card
       className={`${props.lng === "fa" && "text-right"} ${

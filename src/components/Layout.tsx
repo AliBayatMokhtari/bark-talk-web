@@ -1,13 +1,23 @@
 import { useState } from "react";
-import Message from "./chat/message";
+import { Message } from "./chat/message";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import audioRecorder from "@/lib/audioRecorder";
 import converter from "@/lib/converter";
 import webService from "@/service/webService";
+import { Combobox, ComboboxOption } from "./ui/combobox";
 
-export default function Layout() {
+interface LayoutProps {
+  globalConfig: Record<string, string>;
+}
+
+export function Layout(props: LayoutProps) {
+  const { globalConfig } = props;
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [selectedLang, setSelectedLang] = useState<ComboboxOption>({
+    label: globalConfig["en"],
+    value: "en",
+  });
 
   const startRecording = () => {
     setIsRecording(true);
@@ -27,21 +37,28 @@ export default function Layout() {
             Math.floor(Math.random() * (99999999999 - 1 + 1) + 1) + ".wav",
           file_content: res,
         };
-        webService.upload("en", reqBody).then((res) => console.log(res));
+        webService
+          .upload(selectedLang.value, reqBody)
+          .then((res) => console.log(res));
       });
   };
 
-  const getLangs = () => {
-    webService.getSupportedLangs().then((res) => console.log(res));
-  };
+  const selectLangOptions = Object.keys(globalConfig).map((key) => ({
+    value: key,
+    label: globalConfig[key],
+  }));
 
   return (
     <div className="w-full h-full bg-slate-100">
       <div className="flex flex-col h-full max-w-3xl gap-2 p-8 mx-auto">
-        {/* <div className="flex justify-between">
+        <div className="flex justify-between">
           <h1 className="text-xl font-bold">Voice to Text</h1>
-          <Button className="">Record Voice</Button>
-        </div> */}
+          <Combobox
+            options={selectLangOptions}
+            value={selectedLang}
+            onChange={(newValue) => setSelectedLang(newValue)}
+          />
+        </div>
         <Card className="flex flex-col flex-1">
           <div className="flex flex-col flex-1 gap-2 p-2 overflow-auto">
             <Message from="me" msg="this is content" lng="en" />
