@@ -1,27 +1,34 @@
-# React + TypeScript + Vite
+# BarkTalk: ChatGPT-powered Voice Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![GitHub license](https://img.shields.io/github/license/alibayatmokhtari/bark-talk-web)](https://github.com/alibayatmokhtari/bark-talk-web/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/alibayatmokhtari/bark-talk-web)](https://github.com/alibayatmokhtari/bark-talk-web/issues)
+[![GitHub stars](https://img.shields.io/github/stars/alibayatmokhtari/bark-talk-web)](https://github.com/alibayatmokhtari/bark-talk-web/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/alibayatmokhtari/bark-talk-web)](https://github.com/alibayatmokhtari/bark-talk-web/network)
 
-Currently, two official plugins are available:
+BarkTalk is a ChatGPT-powered voice assistant that uses Google Text-to-Speech (TTS) and Speech-to-Text (STT) to enable natural language conversation with users in multiple languages. This is the front-end web application written with React, TailwindCss and powered by Typescript which communicates with this [back-end application](https://github.com/msadeqsirjani/BarkTalk) as web service provider.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
 
-## Expanding the ESLint configuration
+To use web client, you'll need to follow these steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone this repository to your local machine.
+2. Install [bun](https://bun.sh/) on your machine if you have not installed it already.
+3. Install required packages by running `bun install`.
+4. Run the application by running `bun run dev`.
 
-- Configure the top-level `parserOptions` property like this:
+## Contributing
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+If you'd like to contribute to BarkTalkWeb, please follow these guidelines:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Fork this repository and clone it to your local machine.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and test them thoroughly.
+4. Submit a pull request with a clear description of your changes and why they're necessary.
+
+## License
+
+BarkTalkWeb is licensed under the MIT License. See [LICENSE](https://img.shields.io/github/license/alibayatmokhtari/bark-talk-web) for more information.
+
+## Contact
+
+If you have any questions or feedback about BarkTalk we application, please feel free to contact me at [ali.bayatmokhtari96@gmail.com](mailto:ali.bayatmokhtari96@gmail.com).
