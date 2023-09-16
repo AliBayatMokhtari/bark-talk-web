@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -10,10 +10,12 @@ import { Chat } from "./chat/chat";
 
 interface LayoutProps {
   globalConfig: Record<string, string>;
+  webServiceBaseUrl: string;
 }
 
 export function Layout(props: LayoutProps) {
-  const { globalConfig } = props;
+  const { globalConfig, webServiceBaseUrl } = props;
+  const ws = useMemo(() => webService(webServiceBaseUrl), []);
   const [chats, setChats] = useState<UploadResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -43,8 +45,7 @@ export function Layout(props: LayoutProps) {
 
         setLoading(true);
 
-        webService
-          .upload(selectedLang.value, reqBody)
+        ws.upload(selectedLang.value, reqBody)
           .then((res) => setChats((old) => [...old, res.data]))
           .finally(() => setLoading(false));
       });
@@ -59,7 +60,7 @@ export function Layout(props: LayoutProps) {
     <div className="w-full h-full bg-slate-100">
       <div className="flex flex-col h-full max-w-3xl gap-2 p-8 mx-auto">
         <div className="flex justify-between">
-          <h1 className="text-xl font-bold">Voice to Text</h1>
+          <h1 className="text-xl font-bold">Bark Talk Web</h1>
           <Combobox
             options={selectLangOptions}
             value={selectedLang}

@@ -1,5 +1,3 @@
-const baseUrl = "http://3.67.227.198:5002";
-
 interface ServerResultModel<T> {
   data: T;
   message: string | null;
@@ -30,7 +28,7 @@ interface WebService {
   download(): void;
 }
 
-const webService: WebService = {
+const webService: (baseUrl: string) => WebService = (baseUrl) => ({
   getSupportedLangs() {
     const url = baseUrl + "/supported_language";
     return new Promise((resolve) =>
@@ -59,6 +57,6 @@ const webService: WebService = {
     );
   },
   download() {},
-};
+});
 
 export default webService;
