@@ -9,7 +9,7 @@ BarkTalk is a ChatGPT-powered voice assistant that uses Google Text-to-Speech (T
 
 ## Installation
 
-To use web client, you'll need to follow these steps:
+To use BarkTalkWeb, you'll need to follow these steps:
 
 1. Clone this repository to your local machine.
 2. Install [bun](https://bun.sh/) on your machine if you have not installed it already.
